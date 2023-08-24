@@ -4,7 +4,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: '35 21 * * *' # 9:35pm UTC everyday
+    - cron: '25 21 * * *' # 9:25pm UTC everyday
   push:
     branches:
       - main
@@ -26,13 +26,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        image_name: [fedora-toolbox]
-        major_version: [37, 38]
+        image_name: [debian-toolbox]
+        major_version: [12]
         include:
-          - major_version: 37
+          - major_version: 12
             is_latest_version: true
             is_stable_version: true
-          - major_version: 38
+          - major_version: 13
             is_latest_version: true
             is_stable_version: false
     steps: 
@@ -103,7 +103,7 @@ jobs:
           labels: |
             org.opencontainers.image.title=${{ format('{0}-custom', matrix.image_name) }}
             org.opencontainers.image.description=Custom ${{ matrix.image_name }} updated daily with some dev specific RPMs
-            io.artifacthub.package.readme-url=https://raw.githubusercontent.com/bsherman/fedora-toolbox-custom/main/README.md
+            io.artifacthub.package.readme-url=https://raw.githubusercontent.com/bsherman/debian-toolbox-custom/main/README.md
       # Build image using Buildah action
       - name: Build Image
         id: build_image
@@ -118,7 +118,7 @@ jobs:
             ${{ steps.generate-tags.outputs.alias_tags }}
           build-args: |
             IMAGE_NAME=${{ matrix.image_name }}
-            FEDORA_MAJOR_VERSION=${{ matrix.major_version }}
+            DEBIAN_MAJOR_VERSION=${{ matrix.major_version }}
           labels: ${{ steps.meta.outputs.labels }}
           oci: false
 
