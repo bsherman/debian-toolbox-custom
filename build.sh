@@ -27,6 +27,7 @@ apt-get install -y \
   ipcalc \
   just \
   nodejs \
+  npm \
   patch \
   pipx \
   pre-commit \
