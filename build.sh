@@ -4,6 +4,10 @@ set -ouex
 
 #RELEASE="$(rpm -E %fedora)"
 
+# install mpr (provides rust and others)
+wget -qO - 'https://proget.makedeb.org/debian-feeds/prebuilt-mpr.pub' | gpg --dearmor > /usr/share/keyrings/prebuilt-mpr-archive-keyring.gpg
+sh -c 'echo "deb [arch=all,amd64 signed-by=/usr/share/keyrings/prebuilt-mpr-archive-keyring.gpg] https://proget.makedeb.org prebuilt-mpr bookworm" > /etc/apt/sources.list.d/prebuilt-mpr.list'
+
 # update any not current packages
 apt-get update && apt-get upgrade -y
 
@@ -21,6 +25,7 @@ apt-get install -y \
   libgtk-4-common \
   hugo \
   ipcalc \
+  just \
   nodejs \
   patch \
   pipx \
@@ -34,17 +39,9 @@ apt-get install -y \
   liblzma-dev \
   yamllint
   #google-droid-fonts-all \
-  #just \
   #qt5-qtbase-gui \
   #python-unversioned-command \
   #source-foundry-hack-fonts \
-
-apt-get install -y wget gpg
-
-# install just via mpr
-wget -qO - 'https://proget.makedeb.org/debian-feeds/prebuilt-mpr.pub' | gpg --dearmor > /usr/share/keyrings/prebuilt-mpr-archive-keyring.gpg
-sh -c 'echo "deb [arch=all,amd64 signed-by=/usr/share/keyrings/prebuilt-mpr-archive-keyring.gpg] https://proget.makedeb.org prebuilt-mpr bookworm" > /etc/apt/sources.list.d/prebuilt-mpr.list'
-apt-get update
 
 # install microsoft VS Code
 wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /etc/apt/keyrings/packages.microsoft.gpg
