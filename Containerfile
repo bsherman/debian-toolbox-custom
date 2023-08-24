@@ -1,7 +1,10 @@
-ARG FEDORA_MAJOR_VERSION="${FEDORA_MAJOR_VERSION:-37}"
+ARG DEBIAN_MAJOR_VERSION="${DEBIAN_MAJOR_VERSION:-12}"
 
-FROM registry.fedoraproject.org/fedora-toolbox:${FEDORA_MAJOR_VERSION}
+FROM quay.io/toolbx-images/debian-toolbox:${DEBIAN_MAJOR_VERSION}
 
 ADD build.sh /tmp/build.sh
 
-RUN /tmp/build.sh && rm /tmp/build.sh
+WORKDIR /tmp
+
+RUN /tmp/build.sh \
+    && rm /tmp/*
